@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowPokas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #0d0d1a;
+            --card-bg: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.1);
+            --text-main: #f0eaff;
+            --text-sub: #a89cc8;
+            --glow: rgba(160, 100, 255, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            background-image:
+                url(floresta_crow.png),
+                radial-gradient(ellipse at 50% 0%, rgba(80, 30, 140, 0.6) 0%, transparent 70%);
+            background-blend-mode: overlay;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Press Start 2P', monospace;
+            display: flex;
+            justify-content: center;
+            padding: 60px 20px 80px;
+        }
+
+        /* overlay escuro pra legibilidade */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 4, 20, 0.72);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        /* FOTO */
+        .avatar-wrapper {
+            position: relative;
+            margin-bottom: 28px;
+            animation: floatIn 0.8s ease both;
+        }
+
+        .avatar-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: conic-gradient(#7c3aed, #c026d3, #7c3aed);
+            animation: spin 6s linear infinite;
+            z-index: -1;
+        }
+
+        img.avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 4px solid var(--bg-dark);
+            display: block;
+            object-fit: cover;
+        }
+
+        /* TÍTULO */
+        h1 {
+            font-family: 'Press Start 2P', monospace;
+            font-size: clamp(1rem, 4vw, 1.6rem);
+            font-weight: 400;
+            color: var(--text-main);
+            text-align: center;
+            line-height: 1.4;
+            letter-spacing: 0.04em;
+            text-shadow: 0 0 30px var(--glow), 0 2px 4px rgba(0,0,0,0.8);
+            margin-bottom: 14px;
+            animation: floatIn 0.9s 0.1s ease both;
+        }
+
+        /* SUBTÍTULO */
+        h2 {
+            font-family: 'Press Start 2P', monospace;
+            font-weight: 400;
+            font-size: clamp(0.5rem, 2vw, 0.65rem);
+            color: var(--text-sub);
+            text-align: center;
+            line-height: 2;
+            letter-spacing: 0.03em;
+            max-width: 360px;
+            margin-bottom: 42px;
+            animation: floatIn 0.9s 0.2s ease both;
+        }
+
+        /* DIVIDER */
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #7c3aed, transparent);
+            margin-bottom: 32px;
+            animation: floatIn 0.9s 0.25s ease both;
+        }
+
+        /* BOTÕES */
+        .links {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        a.btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-family: 'Press Start 2P', monospace;
+            font-weight: 400;
+            font-size: 0.65rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 16px 28px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.15);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        }
+
+        a.btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.06);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        a.btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            filter: brightness(1.12);
+        }
+
+        a.btn:hover::before { opacity: 1; }
+
+        a.btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        a.btn i {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        /* cores originais das redes */
+        .whatsapp {
+            background-color: #25D366;
+            box-shadow: 0 4px 24px rgba(37, 211, 102, 0.3);
+        }
+        .whatsapp:hover {
+            box-shadow: 0 6px 32px rgba(37, 211, 102, 0.5);
+        }
+
+        .telegram {
+            background-color: #0088CC;
+            box-shadow: 0 4px 24px rgba(0, 136, 204, 0.3);
+        }
+        .telegram:hover {
+            box-shadow: 0 6px 32px rgba(0, 136, 204, 0.5);
+        }
+
+        .instagram {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 4px 24px rgba(204, 35, 102, 0.35);
+        }
+        .instagram:hover {
+            box-shadow: 0 6px 32px rgba(204, 35, 102, 0.55);
+        }
+
+        /* animações de entrada com delay escalonado */
+        .btn:nth-child(1) { animation: slideUp 0.6s 0.35s ease both; }
+        .btn:nth-child(2) { animation: slideUp 0.6s 0.45s ease both; }
+        .btn:nth-child(3) { animation: slideUp 0.6s 0.55s ease both; }
+
+        /* FOOTER */
+        footer {
+            margin-top: 48px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.5rem;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: floatIn 1s 0.7s ease both;
+        }
+
+        /* KEYFRAMES */
+        @keyframes floatIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="avatar-wrapper">
+            <img class="avatar" src="crow_perfil.png" alt="Foto de perfil CrowPokas">
+        </div>
+
+        <h1>CrowPokas</h1>
+        <h2>Memes e achadinhos que você não pediu,<br>mas definitivamente precisava.</h2>
+
+        <div class="divider"></div>
+
+        <div class="links">
+            <a href="https://whatsapp.com/channel/0029VbDD1xK5Ejxzlltm032n" target="_blank" class="btn whatsapp">
+                <i class="fa-brands fa-whatsapp"></i>
+                Canal Whatsapp
+            </a>
+            <a href="https://t.me/+05TJy0bQlnNkZWE5" target="_blank" class="btn telegram">
+                <i class="fa-brands fa-telegram"></i>
+                Grupo Telegram
+            </a>
+            <a href="https://www.instagram.com/crowpokas?igsh=aHo2OXVkOXZyNXdk" target="_blank" class="btn instagram">
+                <i class="fa-brands fa-instagram"></i>
+                Instagram
+            </a>
+        </div>
+
+        <footer>crowpokas &copy; 2025</footer>
+
+    </div>
+</body>
+</html>
