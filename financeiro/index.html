@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Controle Financeiro</title>
+  <meta name="description" content="Controle suas contas do mês, renda, gastos por categoria e histórico.">
+  <meta name="theme-color" content="#1f6f5c">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Financeiro">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Controle Financeiro</h1>
+      <p class="sub" id="status">Carregando seus lançamentos…</p>
+    </div>
+    <div class="top-acts">
+      <button class="btn ghost sm" id="btnInstalar" hidden>Instalar app</button>
+      <button class="btn ghost sm" id="btnTema" aria-label="Alternar tema">Tema</button>
+      <button class="btn ghost sm" id="btnMenu" aria-haspopup="true" aria-expanded="false">Backup</button>
+      <div class="menu" id="menu" hidden>
+        <button id="btnExportar">Exportar dados (.json)</button>
+        <button id="btnImportar">Importar dados (.json)</button>
+        <button id="btnCsv">Exportar mês (.csv)</button>
+        <input type="file" id="arquivo" accept="application/json,.json" hidden>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="Meses"></nav>
+
+  <section class="panel" id="resumo">
+    <div class="summary">
+      <div class="stat"><div class="lbl">Renda do mês</div>
+        <div class="renda"><span class="num">R$</span><input id="renda" class="num" inputmode="decimal" placeholder="informe" aria-label="Renda do mês"></div></div>
+      <div class="stat"><div class="lbl">Total de contas</div><div class="val num" id="sTotal">—</div></div>
+      <div class="stat"><div class="lbl">Pago</div><div class="val num ok" id="sPago">—</div></div>
+      <div class="stat"><div class="lbl">A pagar</div><div class="val num warn" id="sPend">—</div></div>
+      <div class="stat"><div class="lbl">Sobra</div><div class="val num" id="sSobra">—</div></div>
+    </div>
+    <div class="bar"><i id="barra" style="width:0"></i></div>
+    <div class="barlbl num" id="barlbl"></div>
+  </section>
+
+  <div id="alerta" hidden></div>
+
+  <section class="panel">
+    <div class="head">
+      <h2 id="listaTitulo">Contas</h2>
+      <div class="filters" role="group" aria-label="Filtro">
+        <button data-f="todas" aria-pressed="true">Todas</button>
+        <button data-f="pend" aria-pressed="false">A pagar</button>
+        <button data-f="pago" aria-pressed="false">Pagas</button>
+      </div>
+    </div>
+    <ul class="bills" id="lista"></ul>
+  </section>
+
+  <section class="panel">
+    <h2 class="mb">Nova conta</h2>
+    <form class="f" id="novo">
+      <label class="c-nome">Conta<input id="nConta" required placeholder="ex.: Energia"></label>
+      <label>Categoria<input id="nCat" list="catlist" placeholder="Moradia"></label>
+      <label>Valor (R$)<input id="nValor" inputmode="decimal" required placeholder="0,00"></label>
+      <label>Dia<input id="nVenc" type="number" min="1" max="31" placeholder="10"></label>
+      <button class="btn" type="submit">Adicionar</button>
+    </form>
+    <datalist id="catlist"></datalist>
+  </section>
+
+  <section class="panel">
+    <h2 class="mb">Para onde vai o dinheiro</h2>
+    <div class="cats" id="cats"></div>
+  </section>
+
+  <section class="panel">
+    <h2>Mês a mês</h2>
+    <div class="hist" id="hist"></div>
+    <div class="legend"><span style="--sw:var(--accent)">Pago</span><span style="--sw:var(--accent-soft)">Total de contas</span></div>
+  </section>
+
+  <footer class="foot">Seus dados ficam salvos neste aparelho. Use <b>Backup → Exportar</b> para levar para outro.</footer>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
